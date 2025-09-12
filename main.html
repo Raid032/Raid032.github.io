@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubre Tu Carrera Ideal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Poppins', 'Inter', sans-serif; }
+        .gradient-bg { background: rgba(168, 95, 0, 0.88); }
+        .card-shadow { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .progress-bar { transition: width 0.3s ease; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .timer { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        .question-slide-in { animation: slideInFromRight 0.6s ease-out; }
+        @keyframes slideInFromRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .option-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-hover:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        
+        .option-selected { animation: selectPulse 0.4s ease-out; background: linear-gradient(135deg, #f59e0b, #d97706) !important; color: white !important; }
+        @keyframes selectPulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        
+        .progress-glow { box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
+        
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        
+        .bounce-in { animation: bounceIn 0.8s ease-out; }
+        @keyframes bounceIn { 
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .typewriter { overflow: hidden; border-right: 3px solid #f59e0b; white-space: nowrap; animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite; }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink-caret { from, to { border-color: transparent; } 50% { border-color: #f59e0b; } }
+        
+        .shimmer { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        
+        .calculator { 
+            background: linear-gradient(145deg, #667eea, #764ba2); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+            border-radius: 20px; 
+            padding: 20px; 
+            color: white; 
+        }
+        .calc-button { 
+            background: rgba(255,255,255,0.2); 
+            border: none; 
+            border-radius: 10px; 
+            color: white; 
+            font-weight: bold; 
+            transition: all 0.2s; 
+            backdrop-filter: blur(10px);
+        }
+        .calc-button:hover { 
+            background: rgba(255,255,255,0.3); 
+            transform: scale(1.05); 
+        }
+        .calc-display { 
+            background: rgba(0,0,0,0.3); 
+            border-radius: 10px; 
+            padding: 15px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 1.5rem; 
+            text-align: right; 
+            min-height: 60px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end;
+        }
+        
+        .visual-element { animation: gentleFloat 4s ease-in-out infinite; }
+        @keyframes gentleFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+        
+        .icon-bounce { animation: iconBounce 2s ease-in-out infinite; }
+        @keyframes iconBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4" style="font-family: 'Poppins', sans-serif; letter-spacing: -0.02em;">🎯 Descubre Tu Carrera Ideal</h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">Completa nuestros tres tests especializados y encuentra la carrera perfecta para ti</p>
+            
+            <!-- Career icons floating -->
+            <div class="flex justify-center space-x-8 mt-6 relative z-10">
+                <div class="text-4xl icon-bounce" style="animation-delay: 0.5s;">🔬</div>
+                <div class="text-4xl icon-bounce" style="animation-delay: 1s;">🎨</div>
+                <div class="text-4xl icon-bounce" style="animation-delay: 1.5s;">💼</div>
+                <div class="text-4xl icon-bounce" style="animation-delay: 2s;">🏥</div>
+                <div class="text-4xl icon-bounce" style="animation-delay: 2.5s;">💻</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="max-w-4xl mx-auto">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="bg-white rounded-2xl card-shadow p-8 fade-in border-2 border-white">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">🚀</div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Bienvenido a tu futuro!</h2>
+                    <p class="text-gray-600 text-lg mb-8">Realizarás cuatro tests únicos que analizarán tus intereses, inteligencias múltiples, habilidades específicas y personalidad para recomendarte las carreras más compatibles contigo.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-blue-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl mb-3">💡</div>
+                        <h3 class="font-semibold text-blue-800 mb-2">Test de Intereses</h3>
+                        <p class="text-blue-600 text-sm">20 preguntas sobre tus gustos y preferencias</p>
+                        <!-- Mini illustration -->
+                        <div class="mt-3 flex justify-center space-x-2">
+                            <div class="w-2 h-2 bg-blue-300 rounded-full"></div>
+                            <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl mb-3">🧠</div>
+                        <h3 class="font-semibold text-orange-800 mb-2">Inteligencias Múltiples</h3>
+                        <p class="text-orange-600 text-sm">40 preguntas basadas en la teoría de Gardner</p>
+                        <!-- Mini brain icons -->
+                        <div class="mt-3 flex justify-center space-x-1">
+                            <div class="text-sm">📚</div>
+                            <div class="text-sm">🔢</div>
+                            <div class="text-sm">🎨</div>
+                            <div class="text-sm">🎵</div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl mb-3">⚡</div>
+                        <h3 class="font-semibold text-green-800 mb-2">Test de Habilidades</h3>
+                        <p class="text-green-600 text-sm">50 ejercicios por áreas con tiempo límite</p>
+                        <!-- Mini progress bars -->
+                        <div class="mt-3 space-y-1">
+                            <div class="w-full bg-green-200 rounded-full h-1">
+                                <div class="bg-green-500 h-1 rounded-full" style="width: 80%"></div>
+                            </div>
+                            <div class="w-full bg-green-200 rounded-full h-1">
+                                <div class="bg-green-500 h-1 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-xl text-center">
+                        <div class="text-3xl mb-3">🎭</div>
+                        <h3 class="font-semibold text-purple-800 mb-2">Test de Personalidad</h3>
+                        <p class="text-purple-600 text-sm">10 situaciones para descubrir tu esencia</p>
+                        <!-- Mini personality icons -->
+                        <div class="mt-3 flex justify-center space-x-2">
+                            <div class="text-lg">🌟</div>
+                            <div class="text-lg">🎨</div>
+                            <div class="text-lg">🤝</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="startTests()" class="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-amber-700 hover:to-orange-700 transform hover:scale-105 transition-all duration-200">
+                        Comenzar Tests 🎯
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Container -->
+            <div id="testContainer" class="hidden">
+                <!-- Progress Bar -->
+                <div class="bg-white rounded-xl p-6 mb-6 card-shadow bounce-in border-2 border-white">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div id="testIcon" class="text-2xl floating">💡</div>
+                            <span id="testTitle" class="font-bold text-xl text-gray-800"></span>
+                        </div>
+                        <div class="text-right">
+                            <div id="progressText" class="text-sm font-medium text-gray-600"></div>
+                            <div id="progressPercentage" class="text-lg font-bold text-orange-600">0%</div>
+                        </div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div id="progressBar" class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 h-4 rounded-full progress-bar progress-glow transition-all duration-700 ease-out" style="width: 0%"></div>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500 text-center">
+                        <span id="motivationalText">¡Excelente! Sigue así 🚀</span>
+                    </div>
+                </div>
+
+                <!-- Timer (for skills test) -->
+                <div id="timerContainer" class="hidden bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl p-6 mb-6 text-center bounce-in">
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="text-4xl floating">⏰</div>
+                        <div>
+                            <div class="text-red-700 font-bold text-lg">Tiempo restante</div>
+                            <div class="flex items-center justify-center space-x-2">
+                                <span id="timer" class="timer text-4xl font-bold text-red-600 bg-white px-4 py-2 rounded-lg shadow-lg">60</span>
+                                <span class="text-red-600 font-semibold">segundos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div id="timerBar" class="w-full bg-red-200 rounded-full h-2">
+                            <div id="timerProgress" class="bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 h-2 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question Container -->
+                <div id="questionContainer" class="bg-white rounded-2xl card-shadow p-8 question-slide-in border-2 border-white">
+                    <div id="questionContent"></div>
+                </div>
+
+                <!-- Calculator Modal -->
+                <div id="calculatorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="calculator max-w-sm w-full mx-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold">🧮 Calculadora</h3>
+                            <button onclick="toggleCalculator()" class="text-white hover:text-gray-300 text-2xl">&times;</button>
+                        </div>
+                        <div id="calcDisplay" class="calc-display mb-4">0</div>
+                        <div class="grid grid-cols-4 gap-3">
+                            <button onclick="clearCalc()" class="calc-button p-3 col-span-2">C</button>
+                            <button onclick="deleteLast()" class="calc-button p-3">⌫</button>
+                            <button onclick="appendToCalc('/')" class="calc-button p-3">÷</button>
+                            
+                            <button onclick="appendToCalc('7')" class="calc-button p-3">7</button>
+                            <button onclick="appendToCalc('8')" class="calc-button p-3">8</button>
+                            <button onclick="appendToCalc('9')" class="calc-button p-3">9</button>
+                            <button onclick="appendToCalc('*')" class="calc-button p-3">×</button>
+                            
+                            <button onclick="appendToCalc('4')" class="calc-button p-3">4</button>
+                            <button onclick="appendToCalc('5')" class="calc-button p-3">5</button>
+                            <button onclick="appendToCalc('6')" class="calc-button p-3">6</button>
+                            <button onclick="appendToCalc('-')" class="calc-button p-3">-</button>
+                            
+                            <button onclick="appendToCalc('1')" class="calc-button p-3">1</button>
+                            <button onclick="appendToCalc('2')" class="calc-button p-3">2</button>
+                            <button onclick="appendToCalc('3')" class="calc-button p-3">3</button>
+                            <button onclick="appendToCalc('+')" class="calc-button p-3 row-span-2">+</button>
+                            
+                            <button onclick="appendToCalc('0')" class="calc-button p-3 col-span-2">0</button>
+                            <button onclick="appendToCalc('.')" class="calc-button p-3">.</button>
+                            
+                            <button onclick="calculateResult()" class="calc-button p-3 col-span-3 bg-orange-500 hover:bg-orange-600">=</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="resultsScreen" class="hidden bg-white rounded-2xl card-shadow p-8 fade-in border-2 border-white">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">🎉</div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Resultados Completos!</h2>
+                </div>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test data and logic
+        let currentTest = 0;
+        let currentQuestion = 0;
+        let answers = { interests: [], gardner: [], skills: [], personality: [] };
+        let timer = null;
+        let timeLeft = 60;
+
+        const tests = [
+            {
+                name: "Test de Intereses",
+                type: "interests",
+                questions: [
+                    {
+                        question: "¿Qué actividad te resulta más atractiva en tu tiempo libre?",
+                        options: [
+                            { text: "Leer sobre nuevos descubrimientos científicos", value: "ciencias" },
+                            { text: "Crear contenido digital o diseñar", value: "creatividad" },
+                            { text: "Organizar eventos o liderar grupos", value: "liderazgo" },
+                            { text: "Ayudar a resolver problemas de otros", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "En un proyecto grupal, naturalmente tiendes a:",
+                        options: [
+                            { text: "Investigar y analizar datos", value: "analisis" },
+                            { text: "Proponer ideas innovadoras", value: "creatividad" },
+                            { text: "Coordinar tareas y plazos", value: "liderazgo" },
+                            { text: "Mediar en conflictos y motivar", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué tipo de problema te emociona más resolver?",
+                        options: [
+                            { text: "Un enigma matemático complejo", value: "ciencias" },
+                            { text: "Cómo mejorar el diseño de algo", value: "creatividad" },
+                            { text: "Optimizar un proceso empresarial", value: "liderazgo" },
+                            { text: "Ayudar a alguien con sus emociones", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "Tu programa de TV ideal sería sobre:",
+                        options: [
+                            { text: "Documentales de naturaleza y ciencia", value: "ciencias" },
+                            { text: "Competencias de arte y diseño", value: "creatividad" },
+                            { text: "Programas de emprendimiento", value: "liderazgo" },
+                            { text: "Historias humanas inspiradoras", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "En una librería, te diriges primero a la sección de:",
+                        options: [
+                            { text: "Ciencia y tecnología", value: "ciencias" },
+                            { text: "Arte y diseño", value: "creatividad" },
+                            { text: "Negocios y liderazgo", value: "liderazgo" },
+                            { text: "Psicología y desarrollo personal", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué te motiva más en el trabajo?",
+                        options: [
+                            { text: "Descubrir cómo funcionan las cosas", value: "ciencias" },
+                            { text: "Crear algo único y original", value: "creatividad" },
+                            { text: "Alcanzar metas y objetivos", value: "liderazgo" },
+                            { text: "Hacer una diferencia en la vida de otros", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "Tu herramienta de trabajo ideal sería:",
+                        options: [
+                            { text: "Un laboratorio bien equipado", value: "ciencias" },
+                            { text: "Software de diseño avanzado", value: "creatividad" },
+                            { text: "Plataformas de gestión y análisis", value: "liderazgo" },
+                            { text: "Espacios para interactuar con personas", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué tipo de reconocimiento valoras más?",
+                        options: [
+                            { text: "Ser reconocido por un descubrimiento", value: "ciencias" },
+                            { text: "Ganar un premio de creatividad", value: "creatividad" },
+                            { text: "Ser promovido a un cargo directivo", value: "liderazgo" },
+                            { text: "Recibir agradecimientos de personas ayudadas", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "En tu trabajo ideal, pasarías más tiempo:",
+                        options: [
+                            { text: "Experimentando y probando hipótesis", value: "ciencias" },
+                            { text: "Diseñando y creando prototipos", value: "creatividad" },
+                            { text: "Planificando estrategias", value: "liderazgo" },
+                            { text: "Interactuando con clientes o pacientes", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué ambiente de trabajo prefieres?",
+                        options: [
+                            { text: "Laboratorio o centro de investigación", value: "ciencias" },
+                            { text: "Estudio creativo o taller", value: "creatividad" },
+                            { text: "Oficina corporativa moderna", value: "liderazgo" },
+                            { text: "Centro comunitario o clínica", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "Tu mayor fortaleza es:",
+                        options: [
+                            { text: "Pensamiento lógico y analítico", value: "analisis" },
+                            { text: "Imaginación e innovación", value: "creatividad" },
+                            { text: "Capacidad de organización", value: "liderazgo" },
+                            { text: "Empatía y comunicación", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué te resulta más fácil?",
+                        options: [
+                            { text: "Resolver ecuaciones complejas", value: "ciencias" },
+                            { text: "Generar ideas originales", value: "creatividad" },
+                            { text: "Convencer a otros de tus ideas", value: "liderazgo" },
+                            { text: "Entender los sentimientos ajenos", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "En una crisis, tu primera reacción es:",
+                        options: [
+                            { text: "Analizar las causas del problema", value: "analisis" },
+                            { text: "Buscar soluciones creativas", value: "creatividad" },
+                            { text: "Tomar el control de la situación", value: "liderazgo" },
+                            { text: "Asegurar que todos estén bien", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué tipo de curso te inscribirías por placer?",
+                        options: [
+                            { text: "Física cuántica o biotecnología", value: "ciencias" },
+                            { text: "Fotografía o escritura creativa", value: "creatividad" },
+                            { text: "MBA o curso de liderazgo", value: "liderazgo" },
+                            { text: "Psicología o trabajo social", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "Tu proyecto personal ideal sería:",
+                        options: [
+                            { text: "Investigar una cura para una enfermedad", value: "ciencias" },
+                            { text: "Crear una obra de arte revolucionaria", value: "creatividad" },
+                            { text: "Fundar una empresa exitosa", value: "liderazgo" },
+                            { text: "Crear una fundación benéfica", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué te da más satisfacción?",
+                        options: [
+                            { text: "Entender un fenómeno complejo", value: "ciencias" },
+                            { text: "Ver tu creación cobrar vida", value: "creatividad" },
+                            { text: "Ver crecer tu equipo de trabajo", value: "liderazgo" },
+                            { text: "Ver a alguien superar sus problemas", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "En tu tiempo libre prefieres:",
+                        options: [
+                            { text: "Hacer experimentos caseros", value: "ciencias" },
+                            { text: "Dibujar, pintar o crear música", value: "creatividad" },
+                            { text: "Leer sobre estrategias de negocio", value: "liderazgo" },
+                            { text: "Hacer voluntariado", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué habilidad te gustaría desarrollar más?",
+                        options: [
+                            { text: "Programación o análisis de datos", value: "ciencias" },
+                            { text: "Técnicas artísticas avanzadas", value: "creatividad" },
+                            { text: "Habilidades de negociación", value: "liderazgo" },
+                            { text: "Técnicas de counseling", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "Tu mayor sueño profesional es:",
+                        options: [
+                            { text: "Hacer un descubrimiento que cambie el mundo", value: "ciencias" },
+                            { text: "Crear algo que inspire a millones", value: "creatividad" },
+                            { text: "Dirigir una organización importante", value: "liderazgo" },
+                            { text: "Transformar vidas a través de tu trabajo", value: "social" }
+                        ]
+                    },
+                    {
+                        question: "¿Qué legado te gustaría dejar?",
+                        options: [
+                            { text: "Avances científicos significativos", value: "ciencias" },
+                            { text: "Obras creativas memorables", value: "creatividad" },
+                            { text: "Una empresa o institución próspera", value: "liderazgo" },
+                            { text: "Haber ayudado a muchas personas", value: "social" }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "Test de Inteligencias Múltiples",
+                type: "gardner",
+                description: "Basado en la teoría de Howard Gardner sobre las 8 inteligencias múltiples",
+                areas: [
+                    {
+                        name: "Inteligencia Lingüística",
+                        icon: "📚",
+                        description: "Capacidad para usar las palabras de manera efectiva",
+                        questions: [
+                            {
+                                question: "¿Cuál es el sinónimo más preciso de 'perspicaz'?",
+                                options: ["Confuso", "Astuto", "Lento", "Obvio"],
+                                correct: 1,
+                                area: "linguistica"
+                            },
+                            {
+                                question: "Completa la analogía: Libro es a Biblioteca como Cuadro es a:",
+                                options: ["Pincel", "Museo", "Color", "Marco"],
+                                correct: 1,
+                                area: "linguistica"
+                            },
+                            {
+                                question: "¿Qué figura retórica se usa en 'Sus ojos son dos estrellas'?",
+                                options: ["Hipérbole", "Metáfora", "Ironía", "Aliteración"],
+                                correct: 1,
+                                area: "linguistica"
+                            },
+                            {
+                                question: "¿Cuál de estas palabras tiene un prefijo que significa 'antes'?",
+                                options: ["Prehistoria", "Submarino", "Ultrasonido", "Multicolor"],
+                                correct: 0,
+                                area: "linguistica"
+                            },
+                            {
+                                question: "En la oración 'El gato subió al tejado', ¿cuál es el sujeto?",
+                                options: ["subió", "El gato", "al tejado", "tejado"],
+                                correct: 1,
+                                area: "linguistica"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Lógico-Matemática",
+                        icon: "🔢",
+                        description: "Capacidad para usar números y razonar adecuadamente",
+                        questions: [
+                            {
+                                question: "Si 3x + 7 = 22, ¿cuál es el valor de x?",
+                                options: ["3", "4", "5", "6"],
+                                correct: 2,
+                                area: "logico_matematica"
+                            },
+                            {
+                                question: "¿Cuál es el siguiente número en la secuencia: 2, 6, 12, 20, 30, ?",
+                                options: ["40", "42", "44", "46"],
+                                correct: 1,
+                                area: "logico_matematica"
+                            },
+                            {
+                                question: "Si todos los A son B, y algunos B son C, entonces:",
+                                options: ["Todos los A son C", "Algunos A son C", "Ningún A es C", "No se puede determinar"],
+                                correct: 3,
+                                area: "logico_matematica"
+                            },
+                            {
+                                question: "¿Cuál es la probabilidad de obtener dos caras al lanzar dos monedas?",
+                                options: ["1/2", "1/3", "1/4", "1/6"],
+                                correct: 2,
+                                area: "logico_matematica"
+                            },
+                            {
+                                question: "Si un tren viaja a 80 km/h durante 2.5 horas, ¿qué distancia recorre?",
+                                options: ["160 km", "180 km", "200 km", "220 km"],
+                                correct: 2,
+                                area: "logico_matematica"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Espacial",
+                        icon: "🎨",
+                        description: "Capacidad para percibir el mundo visual-espacial",
+                        questions: [
+                            {
+                                question: "¿Cuántas caras tiene un dodecaedro?",
+                                options: ["8", "10", "12", "20"],
+                                correct: 2,
+                                area: "espacial"
+                            },
+                            {
+                                question: "Si rotas esta figura 90° en sentido horario: ⬆️, obtienes:",
+                                options: ["⬇️", "➡️", "⬅️", "⬆️"],
+                                correct: 1,
+                                area: "espacial"
+                            },
+                            {
+                                question: "¿Cuál es la vista superior de una pirámide cuadrada?",
+                                options: ["Círculo", "Triángulo", "Cuadrado", "Rectángulo"],
+                                correct: 2,
+                                area: "espacial"
+                            },
+                            {
+                                question: "¿Cuántos cubos pequeños necesitas para formar un cubo 4x4x4?",
+                                options: ["16", "32", "48", "64"],
+                                correct: 3,
+                                area: "espacial"
+                            },
+                            {
+                                question: "Si doblas un papel por la mitad 3 veces y haces un agujero, ¿cuántos agujeros habrá al desplegarlo?",
+                                options: ["3", "6", "8", "16"],
+                                correct: 2,
+                                area: "espacial"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Musical",
+                        icon: "🎵",
+                        description: "Capacidad para percibir, discriminar y expresar formas musicales",
+                        questions: [
+                            {
+                                question: "¿Cuántos tiempos tiene un compás de 4/4?",
+                                options: ["2", "3", "4", "8"],
+                                correct: 2,
+                                area: "musical"
+                            },
+                            {
+                                question: "¿Cuál es la secuencia correcta de notas en la escala de Do mayor?",
+                                options: ["Do-Re-Mi-Fa-Sol-La-Si", "Do-Re-Fa-Sol-La-Si-Do", "Do-Mi-Sol-Si-Re-Fa-La", "Do-Fa-Sol-Re-Mi-La-Si"],
+                                correct: 0,
+                                area: "musical"
+                            },
+                            {
+                                question: "¿Qué instrumento NO pertenece a la familia de viento-madera?",
+                                options: ["Flauta", "Clarinete", "Trompeta", "Oboe"],
+                                correct: 2,
+                                area: "musical"
+                            },
+                            {
+                                question: "¿Cuál es el intervalo entre Do y Sol?",
+                                options: ["Tercera", "Cuarta", "Quinta", "Sexta"],
+                                correct: 2,
+                                area: "musical"
+                            },
+                            {
+                                question: "¿Qué significa 'forte' en música?",
+                                options: ["Rápido", "Lento", "Fuerte", "Suave"],
+                                correct: 2,
+                                area: "musical"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Corporal-Kinestésica",
+                        icon: "🏃",
+                        description: "Capacidad para usar el cuerpo para expresar ideas y sentimientos",
+                        questions: [
+                            {
+                                question: "¿Cuál es la mejor forma de mejorar la coordinación mano-ojo?",
+                                options: ["Leer libros", "Practicar deportes con pelota", "Escuchar música", "Resolver puzzles"],
+                                correct: 1,
+                                area: "corporal_kinestesica"
+                            },
+                            {
+                                question: "¿Qué deporte requiere mayor equilibrio dinámico?",
+                                options: ["Ajedrez", "Natación", "Surf", "Tenis de mesa"],
+                                correct: 2,
+                                area: "corporal_kinestesica"
+                            },
+                            {
+                                question: "¿Cuál es el principio básico de la biomecánica en el salto?",
+                                options: ["Velocidad constante", "Conversión de energía", "Resistencia al aire", "Gravedad cero"],
+                                correct: 1,
+                                area: "corporal_kinestesica"
+                            },
+                            {
+                                question: "¿Qué habilidad es más importante en la danza?",
+                                options: ["Memoria visual", "Coordinación rítmica", "Fuerza bruta", "Velocidad máxima"],
+                                correct: 1,
+                                area: "corporal_kinestesica"
+                            },
+                            {
+                                question: "¿Cuál es la mejor manera de desarrollar la motricidad fina?",
+                                options: ["Correr largas distancias", "Practicar caligrafía", "Levantar pesas", "Hacer yoga"],
+                                correct: 1,
+                                area: "corporal_kinestesica"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Interpersonal",
+                        icon: "👥",
+                        description: "Capacidad para entender y trabajar con otras personas",
+                        questions: [
+                            {
+                                question: "¿Cuál es la mejor estrategia para resolver un conflicto grupal?",
+                                options: ["Imponer tu opinión", "Escuchar a todas las partes", "Evitar el problema", "Buscar un culpable"],
+                                correct: 1,
+                                area: "interpersonal"
+                            },
+                            {
+                                question: "¿Qué indica principalmente el lenguaje corporal de una persona con brazos cruzados?",
+                                options: ["Está fría", "Está defensiva", "Está relajada", "Está aburrida"],
+                                correct: 1,
+                                area: "interpersonal"
+                            },
+                            {
+                                question: "¿Cuál es la clave para una comunicación efectiva?",
+                                options: ["Hablar más fuerte", "Usar palabras complejas", "Escucha activa", "Hablar rápido"],
+                                correct: 2,
+                                area: "interpersonal"
+                            },
+                            {
+                                question: "¿Cómo motivarías a un equipo desmotivado?",
+                                options: ["Con amenazas", "Entendiendo sus necesidades", "Aumentando la presión", "Ignorando el problema"],
+                                correct: 1,
+                                area: "interpersonal"
+                            },
+                            {
+                                question: "¿Qué característica es más importante en un líder?",
+                                options: ["Ser el más inteligente", "Inspirar confianza", "Tomar todas las decisiones", "Ser autoritario"],
+                                correct: 1,
+                                area: "interpersonal"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Intrapersonal",
+                        icon: "🧠",
+                        description: "Capacidad para entenderse a uno mismo",
+                        questions: [
+                            {
+                                question: "¿Cuál es la mejor forma de manejar el estrés?",
+                                options: ["Ignorarlo", "Autoconocimiento y técnicas de relajación", "Trabajar más", "Evitar responsabilidades"],
+                                correct: 1,
+                                area: "intrapersonal"
+                            },
+                            {
+                                question: "¿Qué significa tener inteligencia emocional?",
+                                options: ["Ser muy inteligente", "Controlar y entender las emociones", "No sentir emociones", "Ser siempre feliz"],
+                                correct: 1,
+                                area: "intrapersonal"
+                            },
+                            {
+                                question: "¿Cuál es el primer paso para el crecimiento personal?",
+                                options: ["Cambiar a otros", "Autoevaluación honesta", "Leer muchos libros", "Seguir consejos de otros"],
+                                correct: 1,
+                                area: "intrapersonal"
+                            },
+                            {
+                                question: "¿Cómo puedes mejorar tu autoestima?",
+                                options: ["Comparándote con otros", "Reconociendo tus logros", "Evitando desafíos", "Buscando aprobación constante"],
+                                correct: 1,
+                                area: "intrapersonal"
+                            },
+                            {
+                                question: "¿Qué es la metacognición?",
+                                options: ["Pensar muy rápido", "Pensar sobre el pensamiento", "No pensar", "Pensar en el futuro"],
+                                correct: 1,
+                                area: "intrapersonal"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Inteligencia Naturalista",
+                        icon: "🌿",
+                        description: "Capacidad para reconocer y clasificar elementos del entorno natural",
+                        questions: [
+                            {
+                                question: "¿Cuál es la principal función de los hongos en el ecosistema?",
+                                options: ["Producir oxígeno", "Descomponer materia orgánica", "Filtrar agua", "Controlar temperatura"],
+                                correct: 1,
+                                area: "naturalista"
+                            },
+                            {
+                                question: "¿Qué característica distingue a los mamíferos de otros vertebrados?",
+                                options: ["Tienen escamas", "Amamantan a sus crías", "Ponen huevos", "Viven en agua"],
+                                correct: 1,
+                                area: "naturalista"
+                            },
+                            {
+                                question: "¿Cuál es el proceso por el cual las plantas producen su alimento?",
+                                options: ["Respiración", "Fotosíntesis", "Digestión", "Fermentación"],
+                                correct: 1,
+                                area: "naturalista"
+                            },
+                            {
+                                question: "¿Qué tipo de nube indica generalmente buen tiempo?",
+                                options: ["Cumulonimbus", "Nimbostratus", "Cumulus", "Stratus"],
+                                correct: 2,
+                                area: "naturalista"
+                            },
+                            {
+                                question: "¿Cuál es la principal causa del cambio climático actual?",
+                                options: ["Actividad solar", "Emisiones de gases de efecto invernadero", "Cambios en la órbita terrestre", "Actividad volcánica"],
+                                correct: 1,
+                                area: "naturalista"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: "Test de Personalidad",
+                type: "personality",
+                questions: [
+                    {
+                        question: "Te encuentras en un bosque mágico y debes elegir un camino. ¿Cuál eliges?",
+                        options: [
+                            { text: "El sendero iluminado por cristales brillantes", value: "innovador" },
+                            { text: "El camino donde escuchas voces pidiendo ayuda", value: "protector" },
+                            { text: "La ruta que lleva a una torre antigua llena de libros", value: "sabio" },
+                            { text: "El sendero que conduce a un campamento de aventureros", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "En una fiesta, un extraño te ofrece una poción misteriosa. ¿Qué haces?",
+                        options: [
+                            { text: "La pruebas inmediatamente por curiosidad", value: "innovador" },
+                            { text: "Preguntas si es segura para otros primero", value: "protector" },
+                            { text: "Investigas sus ingredientes y efectos", value: "sabio" },
+                            { text: "Propones que todos la prueben juntos", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "Descubres un dragón herido en una cueva. Tu primera reacción es:",
+                        options: [
+                            { text: "Intentar comunicarte con él de forma creativa", value: "innovador" },
+                            { text: "Curarlo sin importar el riesgo personal", value: "protector" },
+                            { text: "Estudiar su comportamiento antes de actuar", value: "sabio" },
+                            { text: "Organizar un grupo de rescate", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "Te dan a elegir un poder mágico. ¿Cuál prefieres?",
+                        options: [
+                            { text: "Crear objetos de la nada", value: "innovador" },
+                            { text: "Curar cualquier herida o enfermedad", value: "protector" },
+                            { text: "Ver el pasado y el futuro", value: "sabio" },
+                            { text: "Inspirar valor en otros", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "En un reino en crisis, ¿cuál sería tu rol ideal?",
+                        options: [
+                            { text: "El inventor que crea soluciones únicas", value: "innovador" },
+                            { text: "El sanador que atiende a los necesitados", value: "protector" },
+                            { text: "El consejero que guía con sabiduría", value: "sabio" },
+                            { text: "El general que organiza la defensa", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "Encuentras un libro mágico que solo puede enseñarte una cosa. ¿Qué eliges aprender?",
+                        options: [
+                            { text: "Cómo crear nuevas formas de magia", value: "innovador" },
+                            { text: "Cómo proteger a los inocentes", value: "protector" },
+                            { text: "Los secretos del universo", value: "sabio" },
+                            { text: "Cómo unir a las personas", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "En una competencia mágica, ¿qué estrategia usarías?",
+                        options: [
+                            { text: "Sorprender con técnicas nunca vistas", value: "innovador" },
+                            { text: "Asegurarme de que nadie salga lastimado", value: "protector" },
+                            { text: "Usar conocimiento ancestral", value: "sabio" },
+                            { text: "Formar alianzas estratégicas", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "Te ofrecen ser aprendiz de un maestro. ¿De quién?",
+                        options: [
+                            { text: "Un alquimista experimental", value: "innovador" },
+                            { text: "Un sanador legendario", value: "protector" },
+                            { text: "Un sabio milenario", value: "sabio" },
+                            { text: "Un rey estratega", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "En tu tiempo libre en la academia mágica, prefieres:",
+                        options: [
+                            { text: "Experimentar con nuevos hechizos", value: "innovador" },
+                            { text: "Ayudar a estudiantes con dificultades", value: "protector" },
+                            { text: "Estudiar en la biblioteca antigua", value: "sabio" },
+                            { text: "Organizar eventos estudiantiles", value: "lider" }
+                        ]
+                    },
+                    {
+                        question: "Al final de tu aventura, ¿qué legado te gustaría dejar?",
+                        options: [
+                            { text: "Haber cambiado la forma de hacer magia", value: "innovador" },
+                            { text: "Haber salvado muchas vidas", value: "protector" },
+                            { text: "Haber preservado conocimiento valioso", value: "sabio" },
+                            { text: "Haber unido reinos en paz", value: "lider" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const careers = {
+            "ciencias-analisis-sabio": {
+                name: "Investigación Científica",
+                careers: ["Física", "Química", "Biología", "Matemáticas", "Astronomía"],
+                description: "Tu perfil combina pasión por la ciencia, pensamiento analítico y búsqueda de conocimiento profundo."
+            },
+            "creatividad-innovador": {
+                name: "Diseño e Innovación",
+                careers: ["Diseño Gráfico", "Arquitectura", "Diseño Industrial", "Arte Digital", "Publicidad Creativa"],
+                description: "Eres una persona creativa con gran capacidad de innovación y visión artística."
+            },
+            "liderazgo-lider": {
+                name: "Administración y Negocios",
+                careers: ["Administración de Empresas", "Marketing", "Finanzas", "Recursos Humanos", "Emprendimiento"],
+                description: "Tienes habilidades naturales de liderazgo y te motiva el mundo empresarial."
+            },
+            "social-protector": {
+                name: "Ciencias de la Salud y Sociales",
+                careers: ["Medicina", "Psicología", "Trabajo Social", "Enfermería", "Terapia"],
+                description: "Tu vocación es ayudar a otros y tienes gran empatía y habilidades sociales."
+            },
+            "tecnologia-innovador": {
+                name: "Tecnología e Ingeniería",
+                careers: ["Ingeniería en Sistemas", "Ciencias de la Computación", "Ingeniería Industrial", "Robótica", "Ciberseguridad"],
+                description: "Combinas habilidades técnicas con capacidad de innovación tecnológica."
+            },
+            "comunicacion-lider": {
+                name: "Comunicación y Medios",
+                careers: ["Periodismo", "Comunicación Social", "Relaciones Públicas", "Producción Audiovisual", "Marketing Digital"],
+                description: "Tienes excelentes habilidades comunicativas y capacidad de liderazgo en medios."
+            },
+            "verbal-sabio": {
+                name: "Humanidades y Educación",
+                careers: ["Literatura", "Historia", "Filosofía", "Educación", "Lingüística"],
+                description: "Te destacas en el manejo del lenguaje y la transmisión de conocimiento."
+            },
+            "creatividad-protector": {
+                name: "Artes Terapéuticas",
+                careers: ["Musicoterapia", "Arteterapia", "Terapia Ocupacional", "Educación Artística", "Diseño Social"],
+                description: "Combinas creatividad con el deseo de ayudar y sanar a través del arte."
+            }
+        };
+
+        function startTests() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('testContainer').classList.remove('hidden');
+            currentTest = 0;
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const test = tests[currentTest];
+            const container = document.getElementById('questionContainer');
+            
+            // Update progress
+            updateProgress();
+            
+            if (test.type === 'skills') {
+                showSkillsQuestion();
+            } else if (test.type === 'gardner') {
+                showGardnerQuestion();
+            } else {
+                showRegularQuestion();
+            }
+        }
+
+        function showRegularQuestion() {
+            const test = tests[currentTest];
+            const question = test.questions[currentQuestion];
+            
+            // Add question number animation
+            const questionNumber = currentQuestion + 1;
+            const totalQuestions = test.questions.length;
+            
+            document.getElementById('questionContent').innerHTML = `
+                <div>
+                    <!-- Question Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg bounce-in">
+                                ${questionNumber}
+                            </div>
+                            <div class="text-sm text-gray-500 font-medium">
+                                Pregunta ${questionNumber} de ${totalQuestions}
+                            </div>
+                        </div>
+                        <div class="text-2xl floating">${getQuestionEmoji(test.type)}</div>
+                    </div>
+                    
+                    <!-- Question Text -->
+                    <div class="mb-8">
+                        <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 leading-relaxed break-words typewriter-container">
+                            <span class="typewriter-text">${question.question}</span>
+                        </h3>
+                    </div>
+                    
+                    <!-- Options -->
+                    <div class="space-y-4">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectAnswerWithAnimation(${index})" 
+                                    class="option-button w-full text-left p-6 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-amber-50 hover:to-orange-50 border-2 border-gray-200 hover:border-amber-300 rounded-2xl option-hover group relative overflow-hidden"
+                                    style="animation-delay: ${index * 0.1}s">
+                                
+                                <!-- Option background effect -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                                
+                                <div class="relative z-10 flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                                        ${String.fromCharCode(65 + index)}
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="text-gray-800 font-medium text-lg group-hover:text-gray-900 transition-colors duration-300">
+                                            ${option.text || option}
+                                        </span>
+                                    </div>
+                                    <div class="text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        ${['🌟', '✨', '💫', '⭐'][index] || '✨'}
+                                    </div>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Hint or encouragement -->
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-500 text-sm italic">
+                            💡 ${getRandomEncouragement()}
+                        </p>
+                    </div>
+                </div>
+            `;
+            
+            // Trigger typewriter effect
+            setTimeout(() => {
+                const typewriterText = document.querySelector('.typewriter-text');
+                if (typewriterText) {
+                    typewriterText.classList.add('typewriter');
+                }
+            }, 100);
+        }
+
+        function showGardnerQuestion() {
+            const test = tests[currentTest];
+            const areaIndex = Math.floor(currentQuestion / 5);
+            const questionIndex = currentQuestion % 5;
+            const area = test.areas[areaIndex];
+            const question = area.questions[questionIndex];
+            
+            const questionNumber = currentQuestion + 1;
+            const totalQuestions = 40;
+            
+            document.getElementById('questionContent').innerHTML = `
+                <!-- Decorative elements -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-100 to-pink-100 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-100 to-purple-100 rounded-full translate-y-12 -translate-x-12 opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <!-- Question Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-gradient-to-r from-orange-500 to-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg bounce-in">
+                                ${questionNumber}
+                            </div>
+                            <div class="text-sm text-gray-500 font-medium">
+                                Pregunta ${questionNumber} de ${totalQuestions}
+                            </div>
+                        </div>
+                        <div class="text-2xl floating">${area.icon}</div>
+                    </div>
+                    
+                    <!-- Area Badge -->
+                    <div class="mb-6">
+                        <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-3 rounded-full bounce-in">
+                            <span class="text-lg">${area.icon}</span>
+                            <span class="font-bold">${area.name}</span>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-600 italic">
+                            ${area.description}
+                        </div>
+                    </div>
+                    
+                    <!-- Question Text -->
+                    <div class="mb-8">
+                        <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 leading-relaxed break-words">
+                            ${question.question}
+                        </h3>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="text-sm text-orange-600 font-medium flex items-center space-x-2">
+                                <span>🧠</span>
+                                <span>Evalúa tu tipo de inteligencia según Howard Gardner</span>
+                            </div>
+                            ${area.name === 'Inteligencia Lógico-Matemática' ? `
+                                <button onclick="toggleCalculator()" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center space-x-2 text-sm font-medium">
+                                    <span>🧮</span>
+                                    <span>Calculadora</span>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Options -->
+                    <div class="space-y-4">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectGardnerAnswerWithAnimation(${index}, ${question.correct})" 
+                                    class="gardner-option w-full text-left p-6 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-orange-50 hover:to-pink-50 border-2 border-gray-200 hover:border-orange-300 rounded-2xl option-hover group relative overflow-hidden"
+                                    style="animation-delay: ${index * 0.1}s">
+                                
+                                <!-- Option background effect -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-pink-500 opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                                
+                                <div class="relative z-10 flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full flex items-center justify-center font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                                        ${String.fromCharCode(65 + index)}
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="text-gray-800 font-medium text-lg group-hover:text-gray-900 transition-colors duration-300">
+                                            ${option}
+                                        </span>
+                                    </div>
+                                    <div class="text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        🧠
+                                    </div>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Intelligence info -->
+                    <div class="mt-8 text-center">
+                        <div class="inline-flex items-center space-x-2 bg-orange-50 border border-orange-200 px-4 py-2 rounded-full">
+                            <span class="text-orange-600">💡</span>
+                            <span class="text-orange-700 text-sm font-medium">Descubriendo tu perfil de inteligencias múltiples</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showSkillsQuestion() {
+            const test = tests[currentTest];
+            const areaIndex = Math.floor(currentQuestion / 5);
+            const questionIndex = currentQuestion % 5;
+            const area = test.areas[areaIndex];
+            const question = area.questions[questionIndex];
+            
+            // Start timer for each question
+            startTimer();
+            
+            const questionNumber = currentQuestion + 1;
+            const totalQuestions = 50;
+            
+            document.getElementById('questionContent').innerHTML = `
+                <!-- Decorative elements -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-100 to-blue-100 rounded-full -translate-y-16 translate-x-16 opacity-50"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-yellow-100 to-red-100 rounded-full translate-y-12 -translate-x-12 opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <!-- Question Header -->
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg bounce-in">
+                                ${questionNumber}
+                            </div>
+                            <div class="text-sm text-gray-500 font-medium">
+                                Ejercicio ${questionNumber} de ${totalQuestions}
+                            </div>
+                        </div>
+                        <div class="text-2xl floating">⚡</div>
+                    </div>
+                    
+                    <!-- Area Badge -->
+                    <div class="mb-6">
+                        <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full bounce-in">
+                            <span class="text-lg">🎯</span>
+                            <span class="font-bold">Área: ${area.name}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Question Text -->
+                    <div class="mb-8">
+                        <h3 class="text-lg md:text-xl lg:text-2xl font-bold text-gray-800 leading-relaxed break-words">
+                            ${question.question}
+                        </h3>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="text-sm text-orange-600 font-medium flex items-center space-x-2">
+                                <span>⏱️</span>
+                                <span>Responde rápido para obtener puntos extra</span>
+                            </div>
+                            ${area.name === 'Matemáticas' ? `
+                                <button onclick="toggleCalculator()" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center space-x-2 text-sm font-medium">
+                                    <span>🧮</span>
+                                    <span>Calculadora</span>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Options -->
+                    <div class="space-y-4">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectSkillAnswerWithAnimation(${index}, ${question.correct})" 
+                                    class="skill-option w-full text-left p-6 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-green-50 hover:to-blue-50 border-2 border-gray-200 hover:border-green-300 rounded-2xl option-hover group relative overflow-hidden"
+                                    style="animation-delay: ${index * 0.1}s">
+                                
+                                <!-- Option background effect -->
+                                <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+                                
+                                <div class="relative z-10 flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                                        ${String.fromCharCode(65 + index)}
+                                    </div>
+                                    <div class="flex-1">
+                                        <span class="text-gray-800 font-medium text-lg group-hover:text-gray-900 transition-colors duration-300">
+                                            ${option}
+                                        </span>
+                                    </div>
+                                    <div class="text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        ⚡
+                                    </div>
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Speed bonus indicator -->
+                    <div class="mt-8 text-center">
+                        <div class="inline-flex items-center space-x-2 bg-yellow-50 border border-yellow-200 px-4 py-2 rounded-full">
+                            <span class="text-yellow-600">🏃‍♂️</span>
+                            <span class="text-yellow-700 text-sm font-medium">Bonus por velocidad disponible</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startTimer() {
+            timeLeft = 60;
+            document.getElementById('timerContainer').classList.remove('hidden');
+            updateTimer();
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                updateTimerBar();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    // Auto-advance to next question
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+        
+        function updateTimerBar() {
+            const percentage = (timeLeft / 60) * 100;
+            const timerProgress = document.getElementById('timerProgress');
+            if (timerProgress) {
+                timerProgress.style.width = `${percentage}%`;
+            }
+        }
+        
+        function getQuestionEmoji(testType) {
+            const emojis = {
+                'interests': '💡',
+                'skills': '⚡',
+                'personality': '🎭'
+            };
+            return emojis[testType] || '❓';
+        }
+        
+        function getRandomEncouragement() {
+            const encouragements = [
+                "Tómate tu tiempo para reflexionar",
+                "No hay respuestas correctas o incorrectas",
+                "Sé honesto contigo mismo",
+                "Piensa en lo que realmente te motiva",
+                "Confía en tu intuición",
+                "Cada respuesta nos acerca a tu perfil ideal",
+                "Tu futuro profesional está tomando forma",
+                "Estás descubriendo tu potencial único"
+            ];
+            return encouragements[Math.floor(Math.random() * encouragements.length)];
+        }
+        
+        function selectAnswerWithAnimation(answerIndex) {
+            // Add selection animation
+            const buttons = document.querySelectorAll('.option-button');
+            const selectedButton = buttons[answerIndex];
+            
+            if (selectedButton) {
+                selectedButton.classList.add('option-selected');
+                
+                // Disable all buttons
+                buttons.forEach(btn => btn.disabled = true);
+                
+                // Wait for animation then proceed
+                setTimeout(() => {
+                    selectAnswer(answerIndex);
+                }, 600);
+            }
+        }
+        
+        function selectGardnerAnswerWithAnimation(answerIndex, correctIndex) {
+            // Add selection animation
+            const buttons = document.querySelectorAll('.gardner-option');
+            const selectedButton = buttons[answerIndex];
+            
+            if (selectedButton) {
+                // Show if correct or incorrect
+                if (answerIndex === correctIndex) {
+                    selectedButton.classList.add('bg-orange-500', 'text-white');
+                    selectedButton.innerHTML = selectedButton.innerHTML.replace('🧠', '✅');
+                } else {
+                    selectedButton.classList.add('bg-red-500', 'text-white');
+                    selectedButton.innerHTML = selectedButton.innerHTML.replace('🧠', '❌');
+                    // Also highlight correct answer
+                    buttons[correctIndex].classList.add('bg-orange-500', 'text-white');
+                }
+                
+                // Disable all buttons
+                buttons.forEach(btn => btn.disabled = true);
+                
+                // Wait for animation then proceed
+                setTimeout(() => {
+                    selectGardnerAnswer(answerIndex, correctIndex);
+                }, 1000);
+            }
+        }
+
+        function selectSkillAnswerWithAnimation(answerIndex, correctIndex) {
+            // Add selection animation
+            const buttons = document.querySelectorAll('.skill-option');
+            const selectedButton = buttons[answerIndex];
+            
+            if (selectedButton) {
+                // Show if correct or incorrect
+                if (answerIndex === correctIndex) {
+                    selectedButton.classList.add('bg-green-500', 'text-white');
+                    selectedButton.innerHTML = selectedButton.innerHTML.replace('⚡', '✅');
+                } else {
+                    selectedButton.classList.add('bg-red-500', 'text-white');
+                    selectedButton.innerHTML = selectedButton.innerHTML.replace('⚡', '❌');
+                    // Also highlight correct answer
+                    buttons[correctIndex].classList.add('bg-green-500', 'text-white');
+                }
+                
+                // Disable all buttons
+                buttons.forEach(btn => btn.disabled = true);
+                
+                // Wait for animation then proceed
+                setTimeout(() => {
+                    selectSkillAnswer(answerIndex, correctIndex);
+                }, 1000);
+            }
+        }
+
+        function updateTimer() {
+            document.getElementById('timer').textContent = timeLeft;
+            const timerElement = document.getElementById('timer');
+            if (timeLeft <= 10) {
+                timerElement.classList.add('text-red-600');
+            }
+        }
+
+        function selectAnswer(answerIndex) {
+            const test = tests[currentTest];
+            const question = test.questions[currentQuestion];
+            
+            if (test.type === 'interests') {
+                answers.interests.push(question.options[answerIndex].value);
+            } else if (test.type === 'personality') {
+                answers.personality.push(question.options[answerIndex].value);
+            }
+            
+            nextQuestion();
+        }
+
+        function selectGardnerAnswer(answerIndex, correctIndex) {
+            const test = tests[currentTest];
+            const areaIndex = Math.floor(currentQuestion / 5);
+            const area = test.areas[areaIndex];
+            
+            const isCorrect = answerIndex === correctIndex;
+            const score = isCorrect ? 1 : 0;
+            
+            if (!answers.gardner[area.questions[0].area]) {
+                answers.gardner[area.questions[0].area] = [];
+            }
+            answers.gardner[area.questions[0].area].push(score);
+            
+            nextQuestion();
+        }
+
+        function selectSkillAnswer(answerIndex, correctIndex) {
+            if (timer) {
+                clearInterval(timer);
+                document.getElementById('timerContainer').classList.add('hidden');
+            }
+            
+            const test = tests[currentTest];
+            const areaIndex = Math.floor(currentQuestion / 5);
+            const area = test.areas[areaIndex];
+            
+            const isCorrect = answerIndex === correctIndex;
+            const timeBonus = Math.max(0, timeLeft / 60); // Bonus for speed
+            const score = isCorrect ? (1 + timeBonus * 0.5) : 0;
+            
+            if (!answers.skills[area.questions[0].area]) {
+                answers.skills[area.questions[0].area] = [];
+            }
+            answers.skills[area.questions[0].area].push(score);
+            
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            const test = tests[currentTest];
+            let totalQuestions;
+            if (test.type === 'skills') {
+                totalQuestions = 50;
+            } else if (test.type === 'gardner') {
+                totalQuestions = 40;
+            } else {
+                totalQuestions = test.questions.length;
+            }
+            
+            if (currentQuestion >= totalQuestions) {
+                currentTest++;
+                currentQuestion = 0;
+                
+                if (currentTest >= tests.length) {
+                    showResults();
+                    return;
+                }
+            }
+            
+            showQuestion();
+        }
+
+        function updateProgress() {
+            const test = tests[currentTest];
+            let totalQuestions;
+            if (test.type === 'skills') {
+                totalQuestions = 50;
+            } else if (test.type === 'gardner') {
+                totalQuestions = 40;
+            } else {
+                totalQuestions = test.questions.length;
+            }
+            const progress = (currentQuestion / totalQuestions) * 100;
+            
+            // Update test icon based on type
+            const testIcons = {
+                'interests': '💡',
+                'gardner': '🧠',
+                'skills': '⚡',
+                'personality': '🎭'
+            };
+            
+            document.getElementById('testIcon').textContent = testIcons[test.type] || '❓';
+            document.getElementById('testTitle').textContent = test.name;
+            document.getElementById('progressText').textContent = `${currentQuestion + 1} de ${totalQuestions}`;
+            document.getElementById('progressPercentage').textContent = `${Math.round(progress)}%`;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            
+            // Update motivational text based on progress
+            const motivationalTexts = [
+                "¡Excelente! Sigue así 🚀",
+                "¡Vas muy bien! 💪",
+                "¡Increíble progreso! ⭐",
+                "¡Casi terminamos! 🎯",
+                "¡Último esfuerzo! 🏆"
+            ];
+            
+            const textIndex = Math.min(Math.floor(progress / 20), motivationalTexts.length - 1);
+            document.getElementById('motivationalText').textContent = motivationalTexts[textIndex];
+        }
+
+        function showResults() {
+            document.getElementById('testContainer').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            
+            // Analyze results
+            const interestProfile = analyzeInterests();
+            const gardnerProfile = analyzeGardner();
+            const skillProfile = analyzeSkills();
+            const personalityProfile = analyzePersonality();
+            
+            // Match with careers
+            const recommendedCareers = matchCareers(interestProfile, gardnerProfile, skillProfile, personalityProfile);
+            
+            document.getElementById('resultsContent').innerHTML = `
+                <div class="space-y-8">
+                    <!-- Profile Summary -->
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                                <span class="mr-3">🎯</span>
+                                Tu Perfil Vocacional
+                            </h3>
+                            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div class="text-center bg-white bg-opacity-50 p-4 rounded-lg">
+                                    <div class="text-3xl mb-2 icon-bounce">💡</div>
+                                    <div class="font-semibold text-blue-800">Intereses</div>
+                                    <div class="text-sm text-blue-600 font-medium">${interestProfile}</div>
+                                    <!-- Visual indicator -->
+                                    <div class="mt-2 flex justify-center">
+                                        <div class="w-8 h-1 bg-blue-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center bg-white bg-opacity-50 p-4 rounded-lg">
+                                    <div class="text-3xl mb-2 icon-bounce" style="animation-delay: 0.25s;">🧠</div>
+                                    <div class="font-semibold text-orange-800">Inteligencia Dominante</div>
+                                    <div class="text-sm text-orange-600 font-medium">${gardnerProfile}</div>
+                                    <!-- Visual indicator -->
+                                    <div class="mt-2 flex justify-center">
+                                        <div class="w-8 h-1 bg-orange-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center bg-white bg-opacity-50 p-4 rounded-lg">
+                                    <div class="text-3xl mb-2 icon-bounce" style="animation-delay: 0.5s;">⚡</div>
+                                    <div class="font-semibold text-green-800">Habilidad Destacada</div>
+                                    <div class="text-sm text-green-600 font-medium">${skillProfile}</div>
+                                    <!-- Visual indicator -->
+                                    <div class="mt-2 flex justify-center">
+                                        <div class="w-8 h-1 bg-green-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center bg-white bg-opacity-50 p-4 rounded-lg">
+                                    <div class="text-3xl mb-2 icon-bounce" style="animation-delay: 0.75s;">🎭</div>
+                                    <div class="font-semibold text-purple-800">Personalidad</div>
+                                    <div class="text-sm text-purple-600 font-medium">${personalityProfile}</div>
+                                    <!-- Visual indicator -->
+                                    <div class="mt-2 flex justify-center">
+                                        <div class="w-8 h-1 bg-purple-400 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Career Recommendations -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Carreras Recomendadas para Ti</h3>
+                        <div class="space-y-6">
+                            ${recommendedCareers.map((career, index) => `
+                                <div class="bg-white border-2 border-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                                    <div>
+                                        <div class="flex items-start justify-between mb-4">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                                                    ${index + 1}
+                                                </div>
+                                                <h4 class="text-xl font-bold text-gray-800">${career.name}</h4>
+                                            </div>
+                                            <div class="text-center">
+                                                <span class="bg-gradient-to-r from-green-100 to-green-200 text-green-800 px-4 py-2 rounded-full text-sm font-bold border border-green-300">
+                                                    ${career.match}% 
+                                                </span>
+                                                <div class="text-xs text-green-600 mt-1">compatibilidad</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <p class="text-gray-600 mb-4 leading-relaxed">${career.description}</p>
+                                        
+                                        <!-- Career options with icons -->
+                                        <div class="space-y-2">
+                                            <div class="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                                <span class="mr-2">🎓</span>
+                                                Carreras específicas:
+                                            </div>
+                                            <div class="flex flex-wrap gap-2">
+                                                ${career.careers.map(c => `
+                                                    <span class="bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 px-3 py-2 rounded-full text-sm font-medium border border-amber-200 hover:from-amber-200 hover:to-orange-200 transition-colors duration-200">
+                                                        ${c}
+                                                    </span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Match indicator bar -->
+                                        <div class="mt-4">
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-gradient-to-r from-amber-400 to-orange-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: ${career.match}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Skills Breakdown -->
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Análisis Detallado de Habilidades</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            ${Object.entries(getSkillScores()).map(([skill, score]) => `
+                                <div class="bg-white p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="font-medium text-gray-700">${getSkillName(skill)}</span>
+                                        <span class="text-sm font-bold ${score >= 70 ? 'text-green-600' : score >= 50 ? 'text-yellow-600' : 'text-red-600'}">${score}%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full ${score >= 70 ? 'bg-green-500' : score >= 50 ? 'bg-yellow-500' : 'bg-red-500'}" style="width: ${score}%"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center space-y-4">
+                        <button onclick="location.reload()" class="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-amber-700 hover:to-orange-700 transform hover:scale-105 transition-all duration-200">
+                            Realizar Tests Nuevamente
+                        </button>
+                        <div class="text-sm text-gray-500">
+                            💡 Tip: Guarda estos resultados y consulta con un orientador vocacional para obtener más información sobre estas carreras.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function analyzeInterests() {
+            const interests = answers.interests;
+            const counts = {};
+            
+            interests.forEach(interest => {
+                counts[interest] = (counts[interest] || 0) + 1;
+            });
+            
+            const topInterest = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            
+            const interestNames = {
+                'ciencias': 'Científico-Tecnológico',
+                'creatividad': 'Artístico-Creativo',
+                'liderazgo': 'Empresarial-Directivo',
+                'social': 'Social-Humanístico',
+                'analisis': 'Analítico-Investigativo'
+            };
+            
+            return interestNames[topInterest] || 'Multidisciplinario';
+        }
+
+        function analyzeGardner() {
+            const gardnerScores = getGardnerScores();
+            const topIntelligence = Object.keys(gardnerScores).reduce((a, b) => gardnerScores[a] > gardnerScores[b] ? a : b);
+            return getGardnerName(topIntelligence);
+        }
+
+        function analyzeSkills() {
+            const skillScores = getSkillScores();
+            const topSkill = Object.keys(skillScores).reduce((a, b) => skillScores[a] > skillScores[b] ? a : b);
+            return getSkillName(topSkill);
+        }
+
+        function analyzePersonality() {
+            const personality = answers.personality;
+            const counts = {};
+            
+            personality.forEach(trait => {
+                counts[trait] = (counts[trait] || 0) + 1;
+            });
+            
+            const topTrait = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+            
+            const traitNames = {
+                'innovador': 'Innovador',
+                'protector': 'Protector',
+                'sabio': 'Sabio',
+                'lider': 'Líder'
+            };
+            
+            return traitNames[topTrait] || 'Equilibrado';
+        }
+
+        function getGardnerScores() {
+            const scores = {};
+            
+            Object.keys(answers.gardner).forEach(intelligence => {
+                const intelligenceAnswers = answers.gardner[intelligence];
+                const average = intelligenceAnswers.reduce((sum, score) => sum + score, 0) / intelligenceAnswers.length;
+                scores[intelligence] = Math.round(average * 100);
+            });
+            
+            return scores;
+        }
+
+        function getSkillScores() {
+            const scores = {};
+            
+            Object.keys(answers.skills).forEach(skill => {
+                const skillAnswers = answers.skills[skill];
+                const average = skillAnswers.reduce((sum, score) => sum + score, 0) / skillAnswers.length;
+                scores[skill] = Math.round(average * 100);
+            });
+            
+            return scores;
+        }
+
+        function getGardnerName(intelligence) {
+            const names = {
+                'linguistica': 'Lingüística',
+                'logico_matematica': 'Lógico-Matemática',
+                'espacial': 'Espacial',
+                'musical': 'Musical',
+                'corporal_kinestesica': 'Corporal-Kinestésica',
+                'interpersonal': 'Interpersonal',
+                'intrapersonal': 'Intrapersonal',
+                'naturalista': 'Naturalista'
+            };
+            return names[intelligence] || intelligence;
+        }
+
+        function getSkillName(skill) {
+            const names = {
+                'logica': 'Razonamiento Lógico',
+                'matematicas': 'Matemáticas',
+                'verbal': 'Comprensión Verbal',
+                'espacial': 'Razonamiento Espacial',
+                'memoria': 'Memoria y Atención',
+                'creatividad': 'Creatividad',
+                'datos': 'Análisis de Datos',
+                'comunicacion': 'Comunicación',
+                'liderazgo': 'Liderazgo',
+                'tecnologia': 'Tecnología'
+            };
+            return names[skill] || skill;
+        }
+
+        // Calculator functions
+        let calcDisplay = '0';
+        let calcOperator = null;
+        let calcWaitingForOperand = false;
+
+        function toggleCalculator() {
+            const modal = document.getElementById('calculatorModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function updateCalcDisplay() {
+            document.getElementById('calcDisplay').textContent = calcDisplay;
+        }
+
+        function appendToCalc(value) {
+            if (calcWaitingForOperand) {
+                calcDisplay = value;
+                calcWaitingForOperand = false;
+            } else {
+                calcDisplay = calcDisplay === '0' ? value : calcDisplay + value;
+            }
+            updateCalcDisplay();
+        }
+
+        function clearCalc() {
+            calcDisplay = '0';
+            calcOperator = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+
+        function deleteLast() {
+            calcDisplay = calcDisplay.length > 1 ? calcDisplay.slice(0, -1) : '0';
+            updateCalcDisplay();
+        }
+
+        function calculateResult() {
+            try {
+                // Replace display symbols with JavaScript operators
+                let expression = calcDisplay.replace(/×/g, '*').replace(/÷/g, '/');
+                let result = eval(expression);
+                calcDisplay = result.toString();
+                updateCalcDisplay();
+            } catch (error) {
+                calcDisplay = 'Error';
+                updateCalcDisplay();
+                setTimeout(() => {
+                    clearCalc();
+                }, 2000);
+            }
+        }
+
+        function matchCareers(interests, gardner, skills, personality) {
+            // Simplified career matching logic
+            const careerMatches = [];
+            
+            // Define career profiles based on combinations
+            const profiles = [
+                {
+                    key: "ciencias-analisis-sabio",
+                    interests: ["Científico-Tecnológico", "Analítico-Investigativo"],
+                    skills: ["Razonamiento Lógico", "Matemáticas"],
+                    personality: ["Sabio", "Innovador"]
+                },
+                {
+                    key: "creatividad-innovador",
+                    interests: ["Artístico-Creativo"],
+                    skills: ["Creatividad"],
+                    personality: ["Innovador"]
+                },
+                {
+                    key: "liderazgo-lider",
+                    interests: ["Empresarial-Directivo"],
+                    skills: ["Liderazgo", "Comunicación"],
+                    personality: ["Líder"]
+                },
+                {
+                    key: "social-protector",
+                    interests: ["Social-Humanístico"],
+                    skills: ["Comunicación"],
+                    personality: ["Protector"]
+                },
+                {
+                    key: "tecnologia-innovador",
+                    interests: ["Científico-Tecnológico"],
+                    skills: ["Tecnología", "Razonamiento Lógico"],
+                    personality: ["Innovador"]
+                }
+            ];
+            
+            // Calculate matches
+            profiles.forEach(profile => {
+                let match = 0;
+                
+                if (profile.interests.includes(interests)) match += 40;
+                if (profile.skills.includes(skills)) match += 35;
+                if (profile.personality.includes(personality)) match += 25;
+                
+                if (match > 0) {
+                    const career = careers[profile.key];
+                    if (career) {
+                        careerMatches.push({
+                            ...career,
+                            match: Math.min(match, 100)
+                        });
+                    }
+                }
+            });
+            
+            // Add default careers if no matches
+            if (careerMatches.length === 0) {
+                careerMatches.push({
+                    name: "Carreras Multidisciplinarias",
+                    careers: ["Administración", "Comunicación", "Psicología", "Ingeniería", "Educación"],
+                    description: "Tu perfil versátil te permite explorar múltiples áreas profesionales.",
+                    match: 75
+                });
+            }
+            
+            // Sort by match percentage
+            return careerMatches.sort((a, b) => b.match - a.match).slice(0, 3);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97df00c6e737e9ac',t:'MTc1NzY3NTg5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
