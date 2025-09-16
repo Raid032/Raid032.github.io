@@ -83,6 +83,12 @@
         
         .icon-bounce { animation: iconBounce 2s ease-in-out infinite; }
         @keyframes iconBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        .result-card { animation: slideInUp 0.6s ease-out; }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .score-bar { animation: fillBar 1.5s ease-out; }
+        @keyframes fillBar { from { width: 0%; } }
     </style>
 </head>
 <body class="min-h-screen gradient-bg">
@@ -90,7 +96,7 @@
         <!-- Header -->
         <div class="text-center mb-8 fade-in">
             <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4" style="font-family: 'Poppins', sans-serif; letter-spacing: -0.02em;">🎯 Descubre Tu Carrera Ideal</h1>
-            <p class="text-xl text-white/90 max-w-2xl mx-auto">Completa nuestros tres tests especializados y encuentra la carrera perfecta para ti</p>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">Completa nuestros cuatro tests especializados y encuentra la carrera perfecta para ti</p>
             
             <!-- Career icons floating -->
             <div class="flex justify-center space-x-8 mt-6 relative z-10">
@@ -192,24 +198,7 @@
                     </div>
                 </div>
 
-                <!-- Timer (for skills test) -->
-                <div id="timerContainer" class="hidden bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl p-6 mb-6 text-center bounce-in">
-                    <div class="flex items-center justify-center space-x-4">
-                        <div class="text-4xl floating">⏰</div>
-                        <div>
-                            <div class="text-red-700 font-bold text-lg">Tiempo restante</div>
-                            <div class="flex items-center justify-center space-x-2">
-                                <span id="timer" class="timer text-4xl font-bold text-red-600 bg-white px-4 py-2 rounded-lg shadow-lg">60</span>
-                                <span class="text-red-600 font-semibold">segundos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div id="timerBar" class="w-full bg-red-200 rounded-full h-2">
-                            <div id="timerProgress" class="bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 h-2 rounded-full transition-all duration-1000 ease-linear" style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Question Container -->
                 <div id="questionContainer" class="bg-white rounded-2xl card-shadow p-8 question-slide-in border-2 border-white">
@@ -269,8 +258,8 @@
         let currentTest = 0;
         let currentQuestion = 0;
         let answers = { interests: [], gardner: [], skills: [], personality: [] };
-        let timer = null;
-        let timeLeft = 60;
+
+        let testResults = { interests: {}, gardner: {}, skills: {}, personality: {} };
 
         const tests = [
             {
@@ -763,6 +752,362 @@
                 ]
             },
             {
+                name: "Test de Habilidades",
+                type: "skills",
+                areas: [
+                    {
+                        name: "Razonamiento Lógico",
+                        questions: [
+                            {
+                                question: "Si A > B y B > C, entonces:",
+                                options: ["A < C", "A > C", "A = C", "No se puede determinar"],
+                                correct: 1,
+                                area: "logica"
+                            },
+                            {
+                                question: "¿Cuál es el siguiente en la secuencia: 1, 4, 9, 16, ?",
+                                options: ["20", "25", "24", "32"],
+                                correct: 1,
+                                area: "logica"
+                            },
+                            {
+                                question: "Si todos los gatos son animales y algunos animales vuelan, entonces:",
+                                options: ["Todos los gatos vuelan", "Algunos gatos vuelan", "Ningún gato vuela", "No se puede determinar"],
+                                correct: 3,
+                                area: "logica"
+                            },
+                            {
+                                question: "¿Cuál de estas afirmaciones es lógicamente equivalente a 'Si llueve, entonces me quedo en casa'?",
+                                options: ["Si me quedo en casa, entonces llueve", "Si no llueve, entonces no me quedo en casa", "Si no me quedo en casa, entonces no llueve", "Si llueve, entonces no salgo"],
+                                correct: 2,
+                                area: "logica"
+                            },
+                            {
+                                question: "En una secuencia donde cada término es el doble del anterior más 1, si el primer término es 2, ¿cuál es el cuarto término?",
+                                options: ["15", "17", "31", "63"],
+                                correct: 1,
+                                area: "logica"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Matemáticas",
+                        questions: [
+                            {
+                                question: "¿Cuál es el resultado de (3² + 4²)½?",
+                                options: ["5", "7", "25", "49"],
+                                correct: 0,
+                                area: "matematicas"
+                            },
+                            {
+                                question: "Si f(x) = 2x + 3, ¿cuál es f(5)?",
+                                options: ["10", "13", "8", "15"],
+                                correct: 1,
+                                area: "matematicas"
+                            },
+                            {
+                                question: "¿Cuál es el área de un círculo con radio 3?",
+                                options: ["6π", "9π", "18π", "3π"],
+                                correct: 1,
+                                area: "matematicas"
+                            },
+                            {
+                                question: "Si log₂(x) = 3, entonces x =",
+                                options: ["6", "8", "9", "16"],
+                                correct: 1,
+                                area: "matematicas"
+                            },
+                            {
+                                question: "¿Cuál es la derivada de x³?",
+                                options: ["x²", "3x²", "3x", "x³/3"],
+                                correct: 1,
+                                area: "matematicas"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Comprensión Verbal",
+                        questions: [
+                            {
+                                question: "¿Cuál es el antónimo de 'efímero'?",
+                                options: ["Temporal", "Duradero", "Rápido", "Frágil"],
+                                correct: 1,
+                                area: "verbal"
+                            },
+                            {
+                                question: "En el texto 'La innovación tecnológica ha revolucionado la comunicación', la palabra 'revolucionado' significa:",
+                                options: ["Complicado", "Transformado radicalmente", "Destruido", "Mejorado ligeramente"],
+                                correct: 1,
+                                area: "verbal"
+                            },
+                            {
+                                question: "¿Cuál de estas oraciones está correctamente puntuada?",
+                                options: ["Hola, ¿cómo estás?", "Hola ¿cómo estás?", "Hola, ¿cómo estás.", "Hola ¿cómo, estás?"],
+                                correct: 0,
+                                area: "verbal"
+                            },
+                            {
+                                question: "La palabra 'bibliófilo' se refiere a alguien que:",
+                                options: ["Escribe libros", "Vende libros", "Ama los libros", "Critica libros"],
+                                correct: 2,
+                                area: "verbal"
+                            },
+                            {
+                                question: "¿Cuál es la idea principal del párrafo: 'El ejercicio regular no solo mejora la salud física, sino que también beneficia la salud mental. Los estudios muestran que la actividad física reduce el estrés y mejora el estado de ánimo'?",
+                                options: ["El ejercicio reduce el estrés", "Los estudios son importantes", "El ejercicio beneficia tanto la salud física como mental", "La salud mental es importante"],
+                                correct: 2,
+                                area: "verbal"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Razonamiento Espacial",
+                        questions: [
+                            {
+                                question: "¿Cuántos cubos hay en total en una estructura 3x3x3?",
+                                options: ["9", "18", "27", "81"],
+                                correct: 2,
+                                area: "espacial"
+                            },
+                            {
+                                question: "Si rotas un cubo 90° sobre su eje vertical, ¿cuántas caras cambian de posición?",
+                                options: ["2", "4", "6", "8"],
+                                correct: 1,
+                                area: "espacial"
+                            },
+                            {
+                                question: "¿Cuál es la vista frontal de una pirámide triangular?",
+                                options: ["Cuadrado", "Triángulo", "Círculo", "Rectángulo"],
+                                correct: 1,
+                                area: "espacial"
+                            },
+                            {
+                                question: "Si doblas una hoja cuadrada por la diagonal, ¿qué figura obtienes?",
+                                options: ["Rectángulo", "Triángulo", "Rombo", "Trapecio"],
+                                correct: 1,
+                                area: "espacial"
+                            },
+                            {
+                                question: "¿Cuántas aristas tiene un octaedro?",
+                                options: ["8", "12", "16", "24"],
+                                correct: 1,
+                                area: "espacial"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Memoria y Atención",
+                        questions: [
+                            {
+                                question: "Memoriza esta secuencia: 7, 3, 9, 1, 5. ¿Cuál es el tercer número?",
+                                options: ["7", "3", "9", "1"],
+                                correct: 2,
+                                area: "memoria"
+                            },
+                            {
+                                question: "¿Cuántas letras 'A' hay en: ABRACADABRA?",
+                                options: ["3", "4", "5", "6"],
+                                correct: 2,
+                                area: "memoria"
+                            },
+                            {
+                                question: "Si te doy los números 2, 4, 6, 8 y luego te pregunto por el segundo, ¿cuál es?",
+                                options: ["2", "4", "6", "8"],
+                                correct: 1,
+                                area: "memoria"
+                            },
+                            {
+                                question: "Observa: ROJO, AZUL, VERDE, AMARILLO. ¿Cuál viene después de VERDE?",
+                                options: ["ROJO", "AZUL", "VERDE", "AMARILLO"],
+                                correct: 3,
+                                area: "memoria"
+                            },
+                            {
+                                question: "¿Cuántas palabras hay en esta oración: 'El gato negro saltó sobre la mesa'?",
+                                options: ["5", "6", "7", "8"],
+                                correct: 2,
+                                area: "memoria"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Creatividad",
+                        questions: [
+                            {
+                                question: "¿Cuántos usos diferentes puedes imaginar para un clip?",
+                                options: ["1-3 usos", "4-6 usos", "7-10 usos", "Más de 10 usos"],
+                                correct: 3,
+                                area: "creatividad"
+                            },
+                            {
+                                question: "Si tuvieras que diseñar una casa para Marte, ¿cuál sería tu prioridad principal?",
+                                options: ["Que sea bonita", "Protección atmosférica", "Que sea grande", "Que sea barata"],
+                                correct: 1,
+                                area: "creatividad"
+                            },
+                            {
+                                question: "¿Cuál de estas combinaciones es más creativa?",
+                                options: ["Pez-Bicicleta", "Perro-Hueso", "Gato-Ratón", "Pájaro-Cielo"],
+                                correct: 0,
+                                area: "creatividad"
+                            },
+                            {
+                                question: "Para resolver el problema de tráfico en las ciudades, ¿cuál sería la solución más innovadora?",
+                                options: ["Más semáforos", "Transporte subterráneo", "Teletransportación", "Más policías"],
+                                correct: 2,
+                                area: "creatividad"
+                            },
+                            {
+                                question: "Si pudieras inventar un nuevo deporte, ¿qué elemento sería más importante?",
+                                options: ["Que sea competitivo", "Que sea divertido y único", "Que sea fácil", "Que sea tradicional"],
+                                correct: 1,
+                                area: "creatividad"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Análisis de Datos",
+                        questions: [
+                            {
+                                question: "Si las ventas aumentaron 20% en enero y 15% en febrero, ¿cuál es el aumento total?",
+                                options: ["35%", "38%", "40%", "32%"],
+                                correct: 1,
+                                area: "datos"
+                            },
+                            {
+                                question: "En un gráfico de barras, si la barra A mide 8cm y representa 40 unidades, ¿cuántas unidades representa una barra de 6cm?",
+                                options: ["25", "30", "35", "20"],
+                                correct: 1,
+                                area: "datos"
+                            },
+                            {
+                                question: "¿Cuál es la mediana de: 3, 7, 2, 9, 5?",
+                                options: ["5", "7", "3", "9"],
+                                correct: 0,
+                                area: "datos"
+                            },
+                            {
+                                question: "Si el 60% de 200 estudiantes aprobó matemáticas y el 40% de estos también aprobó física, ¿cuántos aprobaron ambas?",
+                                options: ["48", "80", "120", "24"],
+                                correct: 0,
+                                area: "datos"
+                            },
+                            {
+                                question: "En una encuesta, 3 de cada 5 personas prefieren el producto A. Si encuestamos 100 personas, ¿cuántas preferirán A?",
+                                options: ["50", "60", "75", "80"],
+                                correct: 1,
+                                area: "datos"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Comunicación",
+                        questions: [
+                            {
+                                question: "¿Cuál es la mejor forma de comenzar una presentación?",
+                                options: ["Con estadísticas", "Con una pregunta o historia", "Con disculpas", "Con datos técnicos"],
+                                correct: 1,
+                                area: "comunicacion"
+                            },
+                            {
+                                question: "En una conversación difícil, lo más importante es:",
+                                options: ["Tener razón", "Escuchar activamente", "Hablar más fuerte", "Evitar el tema"],
+                                correct: 1,
+                                area: "comunicacion"
+                            },
+                            {
+                                question: "¿Cuál de estos elementos NO es verbal en la comunicación?",
+                                options: ["Palabras", "Tono de voz", "Gestos", "Vocabulario"],
+                                correct: 2,
+                                area: "comunicacion"
+                            },
+                            {
+                                question: "Para explicar un concepto complejo, es mejor:",
+                                options: ["Usar términos técnicos", "Dar ejemplos simples", "Hablar rápido", "Asumir conocimiento previo"],
+                                correct: 1,
+                                area: "comunicacion"
+                            },
+                            {
+                                question: "¿Cuál es el porcentaje aproximado de comunicación no verbal?",
+                                options: ["20%", "40%", "55%", "80%"],
+                                correct: 2,
+                                area: "comunicacion"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Liderazgo",
+                        questions: [
+                            {
+                                question: "Un buen líder principalmente:",
+                                options: ["Da órdenes", "Inspira y motiva", "Controla todo", "Evita conflictos"],
+                                correct: 1,
+                                area: "liderazgo"
+                            },
+                            {
+                                question: "Ante un conflicto en el equipo, un líder debe:",
+                                options: ["Ignorarlo", "Tomar partido", "Facilitar la resolución", "Castigar a todos"],
+                                correct: 2,
+                                area: "liderazgo"
+                            },
+                            {
+                                question: "¿Cuál es la característica más importante de un líder?",
+                                options: ["Inteligencia", "Carisma", "Integridad", "Experiencia"],
+                                correct: 2,
+                                area: "liderazgo"
+                            },
+                            {
+                                question: "Para motivar a un equipo desmotivado, es mejor:",
+                                options: ["Aumentar la presión", "Entender las causas", "Cambiar a todos", "Ofrecer dinero"],
+                                correct: 1,
+                                area: "liderazgo"
+                            },
+                            {
+                                question: "Un líder efectivo delega porque:",
+                                options: ["Es perezoso", "No sabe hacer el trabajo", "Desarrolla a su equipo", "Quiere evitar responsabilidad"],
+                                correct: 2,
+                                area: "liderazgo"
+                            }
+                        ]
+                    },
+                    {
+                        name: "Tecnología",
+                        questions: [
+                            {
+                                question: "¿Qué significa 'algoritmo'?",
+                                options: ["Un tipo de computadora", "Una secuencia de instrucciones", "Un lenguaje de programación", "Un error de software"],
+                                correct: 1,
+                                area: "tecnologia"
+                            },
+                            {
+                                question: "¿Cuál es la diferencia entre hardware y software?",
+                                options: ["No hay diferencia", "Hardware es físico, software son programas", "Software es más caro", "Hardware es más nuevo"],
+                                correct: 1,
+                                area: "tecnologia"
+                            },
+                            {
+                                question: "¿Qué es la inteligencia artificial?",
+                                options: ["Computadoras muy rápidas", "Sistemas que simulan inteligencia humana", "Internet avanzado", "Robots físicos"],
+                                correct: 1,
+                                area: "tecnologia"
+                            },
+                            {
+                                question: "¿Cuál es el propósito principal de una base de datos?",
+                                options: ["Hacer cálculos", "Almacenar y organizar información", "Crear gráficos", "Enviar emails"],
+                                correct: 1,
+                                area: "tecnologia"
+                            },
+                            {
+                                question: "¿Qué significa 'nube' en tecnología?",
+                                options: ["El clima", "Servidores remotos", "Programas lentos", "Errores de sistema"],
+                                correct: 1,
+                                area: "tecnologia"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 name: "Test de Personalidad",
                 type: "personality",
                 questions: [
@@ -1106,9 +1451,6 @@
             const area = test.areas[areaIndex];
             const question = area.questions[questionIndex];
             
-            // Start timer for each question
-            startTimer();
-            
             const questionNumber = currentQuestion + 1;
             const totalQuestions = 50;
             
@@ -1146,8 +1488,8 @@
                         </h3>
                         <div class="mt-3 flex items-center justify-between">
                             <div class="text-sm text-orange-600 font-medium flex items-center space-x-2">
-                                <span>⏱️</span>
-                                <span>Responde rápido para obtener puntos extra</span>
+                                <span>🎯</span>
+                                <span>Selecciona la respuesta más adecuada</span>
                             </div>
                             ${area.name === 'Matemáticas' ? `
                                 <button onclick="toggleCalculator()" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center space-x-2 text-sm font-medium">
@@ -1185,42 +1527,18 @@
                         `).join('')}
                     </div>
                     
-                    <!-- Speed bonus indicator -->
+                    <!-- Skill assessment indicator -->
                     <div class="mt-8 text-center">
-                        <div class="inline-flex items-center space-x-2 bg-yellow-50 border border-yellow-200 px-4 py-2 rounded-full">
-                            <span class="text-yellow-600">🏃‍♂️</span>
-                            <span class="text-yellow-700 text-sm font-medium">Bonus por velocidad disponible</span>
+                        <div class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 px-4 py-2 rounded-full">
+                            <span class="text-blue-600">🎯</span>
+                            <span class="text-blue-700 text-sm font-medium">Evaluando tus habilidades específicas</span>
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function startTimer() {
-            timeLeft = 60;
-            document.getElementById('timerContainer').classList.remove('hidden');
-            updateTimer();
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                updateTimer();
-                updateTimerBar();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    // Auto-advance to next question
-                    nextQuestion();
-                }
-            }, 1000);
-        }
-        
-        function updateTimerBar() {
-            const percentage = (timeLeft / 60) * 100;
-            const timerProgress = document.getElementById('timerProgress');
-            if (timerProgress) {
-                timerProgress.style.width = `${percentage}%`;
-            }
-        }
+
         
         function getQuestionEmoji(testType) {
             const emojis = {
@@ -1246,6 +1564,7 @@
         }
         
         function selectAnswerWithAnimation(answerIndex) {
+            
             // Add selection animation
             const buttons = document.querySelectorAll('.option-button');
             const selectedButton = buttons[answerIndex];
@@ -1264,6 +1583,7 @@
         }
         
         function selectGardnerAnswerWithAnimation(answerIndex, correctIndex) {
+            
             // Add selection animation
             const buttons = document.querySelectorAll('.gardner-option');
             const selectedButton = buttons[answerIndex];
@@ -1291,6 +1611,7 @@
         }
 
         function selectSkillAnswerWithAnimation(answerIndex, correctIndex) {
+            
             // Add selection animation
             const buttons = document.querySelectorAll('.skill-option');
             const selectedButton = buttons[answerIndex];
@@ -1317,13 +1638,7 @@
             }
         }
 
-        function updateTimer() {
-            document.getElementById('timer').textContent = timeLeft;
-            const timerElement = document.getElementById('timer');
-            if (timeLeft <= 10) {
-                timerElement.classList.add('text-red-600');
-            }
-        }
+
 
         function selectAnswer(answerIndex) {
             const test = tests[currentTest];
@@ -1355,18 +1670,12 @@
         }
 
         function selectSkillAnswer(answerIndex, correctIndex) {
-            if (timer) {
-                clearInterval(timer);
-                document.getElementById('timerContainer').classList.add('hidden');
-            }
-            
             const test = tests[currentTest];
             const areaIndex = Math.floor(currentQuestion / 5);
             const area = test.areas[areaIndex];
             
             const isCorrect = answerIndex === correctIndex;
-            const timeBonus = Math.max(0, timeLeft / 60); // Bonus for speed
-            const score = isCorrect ? (1 + timeBonus * 0.5) : 0;
+            const score = isCorrect ? 1 : 0;
             
             if (!answers.skills[area.questions[0].area]) {
                 answers.skills[area.questions[0].area] = [];
@@ -1451,13 +1760,21 @@
             const skillProfile = analyzeSkills();
             const personalityProfile = analyzePersonality();
             
+            // Store detailed results
+            testResults = {
+                interests: getInterestScores(),
+                gardner: getGardnerScores(),
+                skills: getSkillScores(),
+                personality: getPersonalityScores()
+            };
+            
             // Match with careers
             const recommendedCareers = matchCareers(interestProfile, gardnerProfile, skillProfile, personalityProfile);
             
             document.getElementById('resultsContent').innerHTML = `
                 <div class="space-y-8">
                     <!-- Profile Summary -->
-                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl">
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl result-card">
                         <div>
                             <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                                 <span class="mr-3">🎯</span>
@@ -1505,8 +1822,8 @@
                     </div>
                     
                     <!-- Career Recommendations -->
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Carreras Recomendadas para Ti</h3>
+                    <div class="result-card" style="animation-delay: 0.2s;">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">🎓 Carreras Recomendadas para Ti</h3>
                         <div class="space-y-6">
                             ${recommendedCareers.map((career, index) => `
                                 <div class="bg-white border-2 border-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -1546,7 +1863,7 @@
                                         <!-- Match indicator bar -->
                                         <div class="mt-4">
                                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                                <div class="bg-gradient-to-r from-amber-400 to-orange-500 h-2 rounded-full transition-all duration-1000 ease-out" style="width: ${career.match}%"></div>
+                                                <div class="bg-gradient-to-r from-amber-400 to-orange-500 h-2 rounded-full score-bar transition-all duration-1000 ease-out" style="width: ${career.match}%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1555,26 +1872,97 @@
                         </div>
                     </div>
                     
-                    <!-- Skills Breakdown -->
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-xl font-bold text-gray-800 mb-4">Análisis Detallado de Habilidades</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            ${Object.entries(getSkillScores()).map(([skill, score]) => `
-                                <div class="bg-white p-4 rounded-lg">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="font-medium text-gray-700">${getSkillName(skill)}</span>
-                                        <span class="text-sm font-bold ${score >= 70 ? 'text-green-600' : score >= 50 ? 'text-yellow-600' : 'text-red-600'}">${score}%</span>
+                    <!-- Detailed Test Results -->
+                    <div class="result-card" style="animation-delay: 0.4s;">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">📊 Resultados Detallados por Test</h3>
+                        
+                        <!-- Interests Results -->
+                        <div class="mb-8 bg-blue-50 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
+                                <span class="mr-2">💡</span>
+                                Test de Intereses
+                            </h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                ${Object.entries(testResults.interests).map(([interest, score]) => `
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-medium text-gray-700">${getInterestName(interest)}</span>
+                                            <span class="text-sm font-bold text-blue-600">${score}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-500 h-2 rounded-full score-bar" style="width: ${score}%"></div>
+                                        </div>
                                     </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="h-2 rounded-full ${score >= 70 ? 'bg-green-500' : score >= 50 ? 'bg-yellow-500' : 'bg-red-500'}" style="width: ${score}%"></div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- Gardner Results -->
+                        <div class="mb-8 bg-orange-50 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold text-orange-800 mb-4 flex items-center">
+                                <span class="mr-2">🧠</span>
+                                Test de Inteligencias Múltiples
+                            </h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                ${Object.entries(testResults.gardner).map(([intelligence, score]) => `
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-medium text-gray-700">${getGardnerName(intelligence)}</span>
+                                            <span class="text-sm font-bold text-orange-600">${score}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-orange-500 h-2 rounded-full score-bar" style="width: ${score}%"></div>
+                                        </div>
                                     </div>
-                                </div>
-                            `).join('')}
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- Skills Results -->
+                        <div class="mb-8 bg-green-50 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold text-green-800 mb-4 flex items-center">
+                                <span class="mr-2">⚡</span>
+                                Test de Habilidades
+                            </h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                ${Object.entries(testResults.skills).map(([skill, score]) => `
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-medium text-gray-700">${getSkillName(skill)}</span>
+                                            <span class="text-sm font-bold ${score >= 70 ? 'text-green-600' : score >= 50 ? 'text-yellow-600' : 'text-red-600'}">${score}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="h-2 rounded-full score-bar ${score >= 70 ? 'bg-green-500' : score >= 50 ? 'bg-yellow-500' : 'bg-red-500'}" style="width: ${score}%"></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- Personality Results -->
+                        <div class="mb-8 bg-purple-50 p-6 rounded-xl">
+                            <h4 class="text-xl font-bold text-purple-800 mb-4 flex items-center">
+                                <span class="mr-2">🎭</span>
+                                Test de Personalidad
+                            </h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                ${Object.entries(testResults.personality).map(([trait, score]) => `
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-medium text-gray-700">${getPersonalityName(trait)}</span>
+                                            <span class="text-sm font-bold text-purple-600">${score}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-purple-500 h-2 rounded-full score-bar" style="width: ${score}%"></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Action Buttons -->
-                    <div class="text-center space-y-4">
+                    <div class="text-center space-y-4 result-card" style="animation-delay: 0.6s;">
                         <button onclick="location.reload()" class="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-amber-700 hover:to-orange-700 transform hover:scale-105 transition-all duration-200">
                             Realizar Tests Nuevamente
                         </button>
@@ -1639,6 +2027,23 @@
             return traitNames[topTrait] || 'Equilibrado';
         }
 
+        function getInterestScores() {
+            const interests = answers.interests;
+            const counts = {};
+            const total = interests.length;
+            
+            interests.forEach(interest => {
+                counts[interest] = (counts[interest] || 0) + 1;
+            });
+            
+            const scores = {};
+            Object.keys(counts).forEach(interest => {
+                scores[interest] = Math.round((counts[interest] / total) * 100);
+            });
+            
+            return scores;
+        }
+
         function getGardnerScores() {
             const scores = {};
             
@@ -1663,16 +2068,44 @@
             return scores;
         }
 
+        function getPersonalityScores() {
+            const personality = answers.personality;
+            const counts = {};
+            const total = personality.length;
+            
+            personality.forEach(trait => {
+                counts[trait] = (counts[trait] || 0) + 1;
+            });
+            
+            const scores = {};
+            Object.keys(counts).forEach(trait => {
+                scores[trait] = Math.round((counts[trait] / total) * 100);
+            });
+            
+            return scores;
+        }
+
+        function getInterestName(interest) {
+            const names = {
+                'ciencias': 'Científico-Tecnológico',
+                'creatividad': 'Artístico-Creativo',
+                'liderazgo': 'Empresarial-Directivo',
+                'social': 'Social-Humanístico',
+                'analisis': 'Analítico-Investigativo'
+            };
+            return names[interest] || interest;
+        }
+
         function getGardnerName(intelligence) {
             const names = {
-                'linguistica': 'Lingüística',
-                'logico_matematica': 'Lógico-Matemática',
-                'espacial': 'Espacial',
-                'musical': 'Musical',
-                'corporal_kinestesica': 'Corporal-Kinestésica',
-                'interpersonal': 'Interpersonal',
-                'intrapersonal': 'Intrapersonal',
-                'naturalista': 'Naturalista'
+                'linguistica': 'Inteligencia Lingüística',
+                'logico_matematica': 'Inteligencia Lógico-Matemática',
+                'espacial': 'Inteligencia Espacial',
+                'musical': 'Inteligencia Musical',
+                'corporal_kinestesica': 'Inteligencia Corporal-Kinestésica',
+                'interpersonal': 'Inteligencia Interpersonal',
+                'intrapersonal': 'Inteligencia Intrapersonal',
+                'naturalista': 'Inteligencia Naturalista'
             };
             return names[intelligence] || intelligence;
         }
@@ -1693,6 +2126,104 @@
             return names[skill] || skill;
         }
 
+        function getPersonalityName(trait) {
+            const names = {
+                'innovador': 'Innovador/Creativo',
+                'protector': 'Protector/Empático',
+                'sabio': 'Sabio/Analítico',
+                'lider': 'Líder/Organizador'
+            };
+            return names[trait] || trait;
+        }
+
+        function matchCareers(interests, gardner, skills, personality) {
+            // Career matching logic based on profile combination
+            const careerMatches = [
+                {
+                    name: "Ingeniería y Tecnología",
+                    careers: ["Ingeniería en Sistemas", "Ciencias de la Computación", "Ingeniería Industrial", "Robótica", "Ciberseguridad"],
+                    description: "Combinas habilidades técnicas con capacidad de innovación tecnológica. Ideal para resolver problemas complejos mediante la tecnología.",
+                    match: calculateMatch(['ciencias', 'analisis'], ['logico_matematica', 'espacial'], ['matematicas', 'tecnologia', 'logica'], ['innovador', 'sabio'])
+                },
+                {
+                    name: "Ciencias de la Salud",
+                    careers: ["Medicina", "Psicología", "Enfermería", "Fisioterapia", "Nutrición"],
+                    description: "Tu vocación es ayudar a otros y tienes gran empatía. Perfecto para carreras que impactan directamente en el bienestar humano.",
+                    match: calculateMatch(['social'], ['interpersonal', 'intrapersonal'], ['comunicacion', 'memoria'], ['protector'])
+                },
+                {
+                    name: "Administración y Negocios",
+                    careers: ["Administración de Empresas", "Marketing", "Finanzas", "Recursos Humanos", "Emprendimiento"],
+                    description: "Tienes habilidades naturales de liderazgo y te motiva el mundo empresarial. Ideal para dirigir y gestionar organizaciones.",
+                    match: calculateMatch(['liderazgo'], ['interpersonal', 'logico_matematica'], ['liderazgo', 'comunicacion', 'datos'], ['lider'])
+                },
+                {
+                    name: "Artes y Diseño",
+                    careers: ["Diseño Gráfico", "Arquitectura", "Bellas Artes", "Diseño Industrial", "Publicidad Creativa"],
+                    description: "Eres una persona creativa con gran capacidad de innovación y visión artística. Perfecto para expresar ideas a través del arte.",
+                    match: calculateMatch(['creatividad'], ['espacial', 'musical'], ['creatividad', 'espacial'], ['innovador'])
+                },
+                {
+                    name: "Educación y Humanidades",
+                    careers: ["Educación", "Historia", "Literatura", "Filosofía", "Lingüística"],
+                    description: "Te destacas en el manejo del lenguaje y la transmisión de conocimiento. Ideal para formar y educar a otros.",
+                    match: calculateMatch(['social', 'analisis'], ['linguistica', 'interpersonal'], ['verbal', 'comunicacion'], ['sabio', 'protector'])
+                },
+                {
+                    name: "Ciencias Exactas",
+                    careers: ["Física", "Química", "Matemáticas", "Estadística", "Investigación Científica"],
+                    description: "Tu perfil combina pasión por la ciencia con pensamiento analítico profundo. Perfecto para la investigación y descubrimiento.",
+                    match: calculateMatch(['ciencias', 'analisis'], ['logico_matematica', 'naturalista'], ['matematicas', 'logica', 'datos'], ['sabio'])
+                }
+            ];
+
+            // Sort by match percentage and return top matches
+            return careerMatches.sort((a, b) => b.match - a.match).slice(0, 4);
+        }
+
+        function calculateMatch(targetInterests, targetGardner, targetSkills, targetPersonality) {
+            let score = 0;
+            let maxScore = 0;
+
+            // Check interests match
+            const interestScores = getInterestScores();
+            targetInterests.forEach(interest => {
+                if (interestScores[interest]) {
+                    score += interestScores[interest];
+                }
+                maxScore += 100;
+            });
+
+            // Check Gardner match
+            const gardnerScores = getGardnerScores();
+            targetGardner.forEach(intelligence => {
+                if (gardnerScores[intelligence]) {
+                    score += gardnerScores[intelligence];
+                }
+                maxScore += 100;
+            });
+
+            // Check skills match
+            const skillScores = getSkillScores();
+            targetSkills.forEach(skill => {
+                if (skillScores[skill]) {
+                    score += skillScores[skill];
+                }
+                maxScore += 100;
+            });
+
+            // Check personality match
+            const personalityScores = getPersonalityScores();
+            targetPersonality.forEach(trait => {
+                if (personalityScores[trait]) {
+                    score += personalityScores[trait];
+                }
+                maxScore += 100;
+            });
+
+            return Math.min(Math.round((score / maxScore) * 100), 95);
+        }
+
         // Calculator functions
         let calcDisplay = '0';
         let calcOperator = null;
@@ -1703,8 +2234,20 @@
             modal.classList.toggle('hidden');
         }
 
-        function updateCalcDisplay() {
-            document.getElementById('calcDisplay').textContent = calcDisplay;
+        function clearCalc() {
+            calcDisplay = '0';
+            calcOperator = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+
+        function deleteLast() {
+            if (calcDisplay.length > 1) {
+                calcDisplay = calcDisplay.slice(0, -1);
+            } else {
+                calcDisplay = '0';
+            }
+            updateCalcDisplay();
         }
 
         function appendToCalc(value) {
@@ -1717,104 +2260,70 @@
             updateCalcDisplay();
         }
 
-        function clearCalc() {
-            calcDisplay = '0';
-            calcOperator = null;
-            calcWaitingForOperand = false;
-            updateCalcDisplay();
-        }
-
-        function deleteLast() {
-            calcDisplay = calcDisplay.length > 1 ? calcDisplay.slice(0, -1) : '0';
-            updateCalcDisplay();
-        }
-
         function calculateResult() {
             try {
-                // Replace display symbols with JavaScript operators
-                let expression = calcDisplay.replace(/×/g, '*').replace(/÷/g, '/');
-                let result = eval(expression);
+                const result = eval(calcDisplay.replace(/×/g, '*').replace(/÷/g, '/'));
                 calcDisplay = result.toString();
+                calcWaitingForOperand = true;
                 updateCalcDisplay();
             } catch (error) {
                 calcDisplay = 'Error';
                 updateCalcDisplay();
-                setTimeout(() => {
-                    clearCalc();
-                }, 2000);
             }
         }
 
-        function matchCareers(interests, gardner, skills, personality) {
-            // Simplified career matching logic
-            const careerMatches = [];
-            
-            // Define career profiles based on combinations
-            const profiles = [
-                {
-                    key: "ciencias-analisis-sabio",
-                    interests: ["Científico-Tecnológico", "Analítico-Investigativo"],
-                    skills: ["Razonamiento Lógico", "Matemáticas"],
-                    personality: ["Sabio", "Innovador"]
-                },
-                {
-                    key: "creatividad-innovador",
-                    interests: ["Artístico-Creativo"],
-                    skills: ["Creatividad"],
-                    personality: ["Innovador"]
-                },
-                {
-                    key: "liderazgo-lider",
-                    interests: ["Empresarial-Directivo"],
-                    skills: ["Liderazgo", "Comunicación"],
-                    personality: ["Líder"]
-                },
-                {
-                    key: "social-protector",
-                    interests: ["Social-Humanístico"],
-                    skills: ["Comunicación"],
-                    personality: ["Protector"]
-                },
-                {
-                    key: "tecnologia-innovador",
-                    interests: ["Científico-Tecnológico"],
-                    skills: ["Tecnología", "Razonamiento Lógico"],
-                    personality: ["Innovador"]
-                }
-            ];
-            
-            // Calculate matches
-            profiles.forEach(profile => {
-                let match = 0;
-                
-                if (profile.interests.includes(interests)) match += 40;
-                if (profile.skills.includes(skills)) match += 35;
-                if (profile.personality.includes(personality)) match += 25;
-                
-                if (match > 0) {
-                    const career = careers[profile.key];
-                    if (career) {
-                        careerMatches.push({
-                            ...career,
-                            match: Math.min(match, 100)
-                        });
-                    }
-                }
-            });
-            
-            // Add default careers if no matches
-            if (careerMatches.length === 0) {
-                careerMatches.push({
-                    name: "Carreras Multidisciplinarias",
-                    careers: ["Administración", "Comunicación", "Psicología", "Ingeniería", "Educación"],
-                    description: "Tu perfil versátil te permite explorar múltiples áreas profesionales.",
-                    match: 75
-                });
-            }
-            
-            // Sort by match percentage
-            return careerMatches.sort((a, b) => b.match - a.match).slice(0, 3);
+        function updateCalcDisplay() {
+            document.getElementById('calcDisplay').textContent = calcDisplay;
         }
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97df00c6e737e9ac',t:'MTc1NzY3NTg5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+</script>
+<script>
+(function(){
+  function injectCFScript() {
+    var iframe = document.createElement('iframe');
+    iframe.height = "1";
+    iframe.width = "1";
+    iframe.style.position = "absolute";
+    iframe.style.top = "0";
+    iframe.style.left = "0";
+    iframe.style.border = "none";
+    iframe.style.visibility = "hidden";
+
+    document.body.appendChild(iframe);
+
+    // Wait for iframe document to be accessible
+    var doc;
+    try {
+      doc = iframe.contentDocument || iframe.contentWindow.document;
+    } catch(e) {
+      // Security / cross-origin issues
+      console.error("Cannot access iframe document:", e);
+      return;
+    }
+
+    if (doc) {
+      // Create the inline script setting __CF$cv$params
+      var inline = doc.createElement('script');
+      inline.innerHTML = "window.__CF$cv$params = {r:'9800f6dac2768baa', t:'MTc1ODAzMjAwNC4wMDAwMDA='};";
+      doc.head.appendChild(inline);
+
+      // Create script tag loading Cloudflare challenge JS
+      var external = doc.createElement('script');
+      external.nonce = '';  // If a nonce is needed, set appropriately
+      external.src = '/cdn-cgi/challenge-platform/scripts/jsd/main.js';
+      doc.head.appendChild(external);
+    }
+  }
+
+  function onReady(fn) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", fn);
+    } else {
+      // Already ready
+      fn();
+    }
+  }
+
+  onReady(injectCFScript);
+
+})();
+</script>
